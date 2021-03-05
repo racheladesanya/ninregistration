@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import { LinkedIdentity } from "src/nin-reg/linked-identity/entities/linked-identity.entity";
 
 @Entity()
 export class Biodatum {
@@ -38,5 +39,10 @@ export class Biodatum {
 
     @Column({ default: true })
     isActive: boolean;
+    
+    @JoinColumn()
+    @OneToOne(type => LinkedIdentity, LinkedIdentity => LinkedIdentity.Biodata)
+    LinkedIdentity: LinkedIdentity;
+
 
 }

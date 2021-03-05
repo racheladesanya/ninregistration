@@ -6,25 +6,33 @@ import { UpdateBiodatumDto } from './dto/update-biodatum.dto';
 import { Biodatum } from './entities/biodatum.entity';
 
 @Injectable()
-export class UsersService {
+export class BiodataService {
     constructor(
-          @InjectRepository(Biodatum)
-          private usersRepository: Repository<Biodatum>
+      //inject user repository for use here in UsersService as if it is part of the class 
+      @InjectRepository(Biodatum)
+      private BiodatumRepository: Repository<Biodatum>
+      
 ){}
-create(createUserDto: CreateBiodatumDto) {
-          return 'This action adds a new user';
+async create(createBiodatumDto: CreateBiodatumDto) {
+      const newBiodatum: Biodatum = this.BiodatumRepository.create(createBiodatumDto)
+      return this.BiodatumRepository.save(newBiodatum);
+      //return 'This action adds a new user';
 } 
-findAll() {
-  return `This action returns all users`;
+async findAll() {
+      //return `This action returns all users`;
+      return await this.BiodatumRepository.find();
 }
-findOne(id: number) {
-  return `This action returns a #${id} user`;
+async findOne(id: number) {
+      //return `This action returns a #${id} user`;
+      return await this.BiodatumRepository.findOne(id);
 
 }
-update(id: number, updateUserDto: UpdateBiodatumDto) { 
-  return `This action updates a #${id} user`;
+async update(id: number, updateBiodatumDto: UpdateBiodatumDto) { 
+       //return `This action updates a #${id} user`;
+       return await this.BiodatumRepository.update(id, updateBiodatumDto);
 }
-remove(id: number) {
-     return `This action removes a #${id} user`;
+async remove(id: number) {
+      //return `This action removes a #${id} user`;
+      return await this.BiodatumRepository.delete(id);
   } 
 }
